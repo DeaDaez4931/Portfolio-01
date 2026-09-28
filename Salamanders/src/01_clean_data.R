@@ -205,3 +205,40 @@ event_check <- aggregate(
 
 table(event_check$site_count)
 table(event_check$date_count)
+
+# ============================================
+# Count measurements within each survey event
+# ============================================
+
+measurements_per_event <- table(
+  overlap_data$sample_ref_no,
+  overlap_data$parameter
+)
+
+head(measurements_per_event)
+
+table(
+  rowSums(measurements_per_event > 0)
+)
+
+# ============================================
+# Compare old and new adult size categories
+# ============================================
+
+comparison_data <- overlap_data[
+  overlap_data$parameter %in% c(
+    "BARTON SPGS SALMNDR  (ADULT) > 1 INCH",
+    "BARTON SPRINGS SLMNDR (TOTAL 1-2IN.)",
+    "BARTON SPRINGS SLMNDR (TOTAL >=2IN.)"
+  ),
+  c("sample_ref_no", "parameter", "result")
+]
+
+comparison_wide <- reshape(
+  comparison_data,
+  idvar = "sample_ref_no",
+  timevar = "parameter",
+  direction = "wide"
+)
+
+names(comparison_wide)
