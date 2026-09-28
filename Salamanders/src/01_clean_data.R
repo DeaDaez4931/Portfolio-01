@@ -154,11 +154,27 @@ major_barton <- barton_salamanders[
   barton_salamanders$parameter %in% major_parameters,
 ]
 
-aggregate(
+# ============================================
+# Check date ranges of major salamander measures
+# ============================================
+
+date_ranges <- aggregate(
   sample_date ~ parameter,
   data = major_barton,
-  FUN = function(x) c(
-    first = min(x),
-    last = max(x)
-  )
+  FUN = range
 )
+
+date_ranges$first_date <- as.POSIXct(
+  date_ranges$sample_date[, 1],
+  origin = "1970-01-01"
+)
+
+date_ranges$last_date <- as.POSIXct(
+  date_ranges$sample_date[, 2],
+  origin = "1970-01-01"
+)
+
+date_ranges[
+  ,
+  c("parameter", "first_date", "last_date")
+]
