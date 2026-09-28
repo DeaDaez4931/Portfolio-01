@@ -80,3 +80,17 @@ colSums(
   raw_data[character_columns] == "",
   na.rm = TRUE
 )
+
+# ============================================
+# Inspect values in columns containing blanks
+# ============================================
+
+unique(raw_data$qualifier)
+unique(raw_data$qc_flag)
+unique(raw_data$qc_type)
+
+# Check sample IDs that are blank
+head(
+  raw_data[raw_data$sample_id == "", ],
+  10
+)
