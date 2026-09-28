@@ -1,0 +1,2 @@
+# Research Question: How are environmental conditions and spatial variation associated with salamander abundance in the Barton Springs ecosystem?
+# Mini Questions: Temporal: How has salamander abundance changed over the sampling period? Spatial: How does abundance differ among sampling sites? Environmental: Are dissolved oxygen, flow, or water depth associated with observed salamander abundance? Overall: Do these relationships differ between Barton Springs salamanders and Austin blind salamanders?
