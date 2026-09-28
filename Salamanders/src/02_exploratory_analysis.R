@@ -222,3 +222,63 @@ project_dates <- aggregate(
 
 method_dates
 project_dates
+
+# ============================================
+# Check for multiple <1 inch measurements
+# within the same survey event
+# ============================================
+
+under_one_per_event <- table(
+  under_one$sample_ref_no
+)
+
+table(under_one_per_event)
+
+max(under_one_per_event)
+
+# ============================================
+# Inspect survey events with duplicate <1 inch measurements
+# ============================================
+
+duplicate_under_one_events <- names(
+  under_one_per_event[under_one_per_event > 1]
+)
+
+duplicate_under_one_events
+
+under_one[
+  under_one$sample_ref_no %in% duplicate_under_one_events,
+]
+
+# ============================================
+# Check for duplicate salamander measurements
+# within survey events
+# ============================================
+
+salamander_measurements_per_event <- table(
+  salamander_data$sample_ref_no,
+  salamander_data$parameter
+)
+
+# Check the largest number of repeated measurements
+max(salamander_measurements_per_event)
+
+# Count how many survey event/parameter combinations
+# occur more than once
+sum(salamander_measurements_per_event > 1)
+
+# ============================================
+# Compare duplicate record fields
+# ============================================
+
+duplicate_records <- under_one[
+  under_one$sample_ref_no %in% duplicate_under_one_events,
+]
+
+duplicate_records
+
+# Check which columns differ between duplicate records
+sapply(
+  duplicate_records,
+  function(x) length(unique(x))
+)
