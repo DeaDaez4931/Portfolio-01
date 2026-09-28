@@ -69,3 +69,9 @@ raw_data$sample_date <- as.POSIXct(
 head(raw_data$sample_date)
 class(raw_data$sample_date)
 sum(is.na(raw_data$sample_date))
+
+# ============================================
+# Check blank values in character columns
+# ============================================
+
+colSums(raw_data == "", na.rm = TRUE)
