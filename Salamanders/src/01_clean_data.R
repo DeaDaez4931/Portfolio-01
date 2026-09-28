@@ -119,3 +119,22 @@ sort(
   table(salamander_data$parameter),
   decreasing = TRUE
 )
+
+# ============================================
+# Inspect Barton Springs salamander methods
+# ============================================
+
+barton_salamanders <- salamander_data[
+  grepl("BARTON", salamander_data$parameter),
+]
+
+table(
+  barton_salamanders$parameter,
+  barton_salamanders$method
+)
+
+table(
+  barton_salamanders$project
+)
+
+range(barton_salamanders$sample_date)
