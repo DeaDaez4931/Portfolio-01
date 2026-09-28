@@ -282,3 +282,117 @@ sapply(
   duplicate_records,
   function(x) length(unique(x))
 )
+
+# ============================================
+# Check completeness of newer size categories
+# ============================================
+
+new_size_parameters <- c(
+  "BARTON SPRINGS SLMNDR  (TOTAL <1IN.)",
+  "BARTON SPRINGS SLMNDR (TOTAL 1-2IN.)",
+  "BARTON SPRINGS SLMNDR (TOTAL >=2IN.)"
+)
+
+new_size_data <- barton_salamanders[
+  barton_salamanders$parameter %in% new_size_parameters &
+  barton_salamanders$sample_date >= as.POSIXct("2002-01-30"),
+]
+
+new_size_per_event <- table(
+  new_size_data$sample_ref_no,
+  new_size_data$parameter
+)
+
+table(
+  rowSums(new_size_per_event > 0)
+)
+
+# ============================================
+# Inspect incomplete newer size-category events
+# ============================================
+
+incomplete_event_ids <- rownames(
+  new_size_per_event[
+    rowSums(new_size_per_event > 0) < 3,
+  ]
+)
+
+incomplete_size_data <- new_size_data[
+  new_size_data$sample_ref_no %in% incomplete_event_ids,
+]
+
+table(incomplete_size_data$parameter)
+
+# ============================================
+# Inspect incomplete size-category events
+# ============================================
+
+# Check date range
+range(incomplete_size_data$sample_date)
+
+# Check sampling sites
+table(incomplete_size_data$site_name)
+
+# Check methods
+table(incomplete_size_data$method)
+
+# Check projects
+table(incomplete_size_data$project)
+
+# ============================================
+# Check whether incomplete newer events
+# contain the historical >1 inch measurement
+# ============================================
+
+old_adult_parameter <-
+  "BARTON SPGS SALMNDR  (ADULT) > 1 INCH"
+
+old_adult_in_incomplete_events <- barton_salamanders[
+  barton_salamanders$sample_ref_no %in% incomplete_event_ids &
+  barton_salamanders$parameter == old_adult_parameter,
+]
+
+length(unique(
+  old_adult_in_incomplete_events$sample_ref_no
+))
+
+# ============================================
+# Inspect incomplete events without old adult measurement
+# ============================================
+
+events_with_old_adult <- unique(
+  old_adult_in_incomplete_events$sample_ref_no
+)
+
+unresolved_event_ids <- setdiff(
+  incomplete_event_ids,
+  events_with_old_adult
+)
+
+unresolved_event_ids
+
+barton_salamanders[
+  barton_salamanders$sample_ref_no %in% unresolved_event_ids,
+]
+# ============================================
+# Check completeness of historical size categories
+# ============================================
+
+old_size_parameters <- c(
+  "BARTON SPRINGS SLMNDR  (TOTAL <1IN.)",
+  "BARTON SPGS SALMNDR  (ADULT) > 1 INCH"
+)
+
+old_size_data <- barton_salamanders[
+  barton_salamanders$sample_date < as.POSIXct("2002-01-30") &
+  barton_salamanders$parameter %in% old_size_parameters,
+]
+
+old_size_per_event <- table(
+  old_size_data$sample_ref_no,
+  old_size_data$parameter
+)
+
+table(
+  rowSums(old_size_per_event > 0)
+)
