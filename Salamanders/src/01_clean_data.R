@@ -55,3 +55,17 @@ names(raw_data) <- c(
 )
 
 names(raw_data)
+
+# ============================================
+# Convert sample date to date-time
+# ============================================
+
+raw_data$sample_date <- as.POSIXct(
+  raw_data$sample_date,
+  format = "%m/%d/%Y %I:%M:%S %p"
+)
+
+# Check conversion
+head(raw_data$sample_date)
+class(raw_data$sample_date)
+sum(is.na(raw_data$sample_date))
