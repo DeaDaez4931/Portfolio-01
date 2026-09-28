@@ -286,3 +286,28 @@ aggregate(
   data = under_one,
   FUN = range
 )
+
+# ============================================
+# Display <1 inch method/project date ranges
+# ============================================
+
+method_dates <- aggregate(
+  sample_date ~ method,
+  data = under_one,
+  FUN = function(x) c(
+    first = format(min(x), "%Y-%m-%d"),
+    last = format(max(x), "%Y-%m-%d")
+  )
+)
+
+project_dates <- aggregate(
+  sample_date ~ project,
+  data = under_one,
+  FUN = function(x) c(
+    first = format(min(x), "%Y-%m-%d"),
+    last = format(max(x), "%Y-%m-%d")
+  )
+)
+
+method_dates
+project_dates
