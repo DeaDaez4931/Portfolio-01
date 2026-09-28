@@ -138,3 +138,27 @@ table(
 )
 
 range(barton_salamanders$sample_date)
+
+# ============================================
+# Check when major salamander measures were used
+# ============================================
+
+major_parameters <- c(
+  "BARTON SPGS SALMNDR  (ADULT) > 1 INCH",
+  "BARTON SPRINGS SLMNDR  (TOTAL <1IN.)",
+  "BARTON SPRINGS SLMNDR (TOTAL 1-2IN.)",
+  "BARTON SPRINGS SLMNDR (TOTAL >=2IN.)"
+)
+
+major_barton <- barton_salamanders[
+  barton_salamanders$parameter %in% major_parameters,
+]
+
+aggregate(
+  sample_date ~ parameter,
+  data = major_barton,
+  FUN = function(x) c(
+    first = min(x),
+    last = max(x)
+  )
+)
