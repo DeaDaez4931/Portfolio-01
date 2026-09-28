@@ -178,3 +178,30 @@ date_ranges[
   ,
   c("parameter", "first_date", "last_date")
 ]
+
+# ============================================
+# Check overlap between old and new size categories
+# ============================================
+
+overlap_data <- major_barton[
+  major_barton$sample_date >= as.POSIXct("2002-01-30") &
+  major_barton$sample_date <= as.POSIXct("2015-10-22"),
+]
+
+table(overlap_data$parameter)
+
+# ============================================
+# Check whether sample_ref_no identifies a survey event
+# ============================================
+
+event_check <- aggregate(
+  cbind(
+    site_count = sample_site_no,
+    date_count = as.numeric(sample_date)
+  ) ~ sample_ref_no,
+  data = overlap_data,
+  FUN = function(x) length(unique(x))
+)
+
+table(event_check$site_count)
+table(event_check$date_count)
