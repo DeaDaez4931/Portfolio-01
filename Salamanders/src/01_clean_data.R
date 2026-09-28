@@ -241,4 +241,11 @@ comparison_wide <- reshape(
   direction = "wide"
 )
 
+names(comparison_wide) <- c(
+  "sample_ref_no",
+  "two_plus",
+  "one_to_two",
+  "adult_over_one"
+)
+
 names(comparison_wide)
