@@ -3,8 +3,12 @@
 # Data Cleaning
 # ============================================
 
+print(getwd())
+
 # Load raw data
-raw_data <- read.csv("data/raw/Barton_Springs_Salamanders_raw.csv")
+raw_data <- read.csv(
+  "data/raw/Barton_Springs_Salamanders_raw.csv"
+)
 
 # Look at the dataset
 head(raw_data)
