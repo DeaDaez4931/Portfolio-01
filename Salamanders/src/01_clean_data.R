@@ -106,3 +106,16 @@ table(raw_data$site_name)
 table(raw_data$medium)
 
 table(raw_data$unit)
+
+# ============================================
+# Inspect salamander parameters
+# ============================================
+
+salamander_data <- raw_data[
+  raw_data$parameter_type == "Salamanders",
+]
+
+sort(
+  table(salamander_data$parameter),
+  decreasing = TRUE
+)
