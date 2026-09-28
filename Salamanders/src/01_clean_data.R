@@ -113,3 +113,38 @@ stopifnot(is.numeric(raw_data$result))
 # ============================================
 
 clean_data <- raw_data
+
+# ============================================
+# Create working clean dataset
+# ============================================
+
+clean_data <- raw_data
+
+# ============================================
+# Remove confirmed duplicate record
+# ============================================
+
+# Exploratory analysis in 02_exploratory_analysis.R found
+# one duplicate salamander measurement. The records were identical
+# across all fields except data_ref_no, confirming a duplicate entry.
+# Remove one copy while preserving the other.
+
+clean_data <- clean_data[
+  clean_data$data_ref_no != 2716105,
+]
+
+# ============================================
+# Validate cleaning steps
+# ============================================
+
+# Confirm all dates converted successfully
+stopifnot(sum(is.na(clean_data$sample_date)) == 0)
+
+# Confirm result is numeric
+stopifnot(is.numeric(clean_data$result))
+
+# Confirm exactly one duplicate record was removed
+stopifnot(nrow(clean_data) == nrow(raw_data) - 1)
+
+# Confirm duplicate record is no longer present
+stopifnot(!2716105 %in% clean_data$data_ref_no)
