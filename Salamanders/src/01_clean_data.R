@@ -74,4 +74,9 @@ sum(is.na(raw_data$sample_date))
 # Check blank values in character columns
 # ============================================
 
-colSums(raw_data == "", na.rm = TRUE)
+character_columns <- sapply(raw_data, is.character)
+
+colSums(
+  raw_data[character_columns] == "",
+  na.rm = TRUE
+)
