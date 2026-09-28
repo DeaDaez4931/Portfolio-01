@@ -249,3 +249,40 @@ names(comparison_wide) <- c(
 )
 
 names(comparison_wide)
+
+comparison_wide$new_over_one <- 
+  comparison_wide$one_to_two + comparison_wide$two_plus
+
+comparison_wide$matches <- 
+  comparison_wide$adult_over_one == comparison_wide$new_over_one
+
+table(comparison_wide$matches, useNA = "ifany")
+
+# ============================================
+# Check <1 inch category consistency over time
+# ============================================
+
+under_one <- barton_salamanders[
+  barton_salamanders$parameter ==
+    "BARTON SPRINGS SLMNDR  (TOTAL <1IN.)",
+]
+
+# Check which methods were used
+table(under_one$method)
+
+# Check which projects recorded this measurement
+table(under_one$project)
+
+# Check date range for each method
+aggregate(
+  sample_date ~ method,
+  data = under_one,
+  FUN = range
+)
+
+# Check date range for each project
+aggregate(
+  sample_date ~ project,
+  data = under_one,
+  FUN = range
+)
