@@ -94,3 +94,15 @@ head(
   raw_data[raw_data$sample_id == "", ],
   10
 )
+
+# ============================================
+# Inspect dataset categories
+# ============================================
+
+table(raw_data$parameter_type)
+
+table(raw_data$site_name)
+
+table(raw_data$medium)
+
+table(raw_data$unit)
